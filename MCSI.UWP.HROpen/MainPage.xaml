@@ -1,0 +1,37 @@
+﻿<Page
+    x:Class="MCSI.UWP.HROpen.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MCSI.UWP.HROpen"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ctrl="using:MCSI.UWP.HROpen.Controls"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="35"/>
+           
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <AppBarButton Icon="Home" Command="{Binding AppBarCommands}" CommandParameter="Home" Grid.Row="0"></AppBarButton>
+            <AppBarButton Icon="People" Command="{Binding AppBarCommands}" CommandParameter="People" Grid.Row="0"></AppBarButton>
+            <AppBarButton Icon="Find"  Command="{Binding AppBarCommands}" CommandParameter="Find" Grid.Row="0"></AppBarButton>
+            <AppBarButton Icon="SaveLocal"  Command="{Binding AppBarCommands}" CommandParameter="Save" Grid.Row="0"></AppBarButton>
+
+        </StackPanel>
+
+        <Border BorderThickness="2" BorderBrush="Black" Grid.Row="1" Margin="4">
+            <TextBlock Text="HR OPEN STANDARDS JSON Platform V 4.1" FontSize="18" VerticalAlignment="Center" 
+                       HorizontalAlignment="Center" FontWeight="Bold" />
+        </Border>
+        
+        <!--<ctrl:IdentifierTypeCTRL Grid.Row="2"/>-->
+        <ContentControl Content="{Binding MainContent}" Grid.Row="2" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Background="AliceBlue"/>
+
+    </Grid>
+</Page>

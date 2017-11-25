@@ -1,0 +1,34 @@
+﻿<ContentDialog
+    x:Class="MCSI.UWP.HROpen.Controls.Views.CountrySubDivisionEditDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MCSI.UWP.HROpen.Controls.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="Country Divisions Editor"
+    PrimaryButtonText="Update"
+    SecondaryButtonText="Cancel"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
+
+    <Grid >
+
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="{Binding ErrorMsg}" Foreground="Red" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.Row="1">
+            <TextBlock Text="Type" Width="100" Margin="4" VerticalAlignment="Center"/>
+            <TextBox Text="{Binding Type, Mode=TwoWay}" Width="150" Margin="4"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.Row="2">
+            <TextBlock Text="Value" Width="100" Margin="4" VerticalAlignment="Center"/>
+            <TextBox Text="{Binding Value, Mode=TwoWay}" Width="150" Margin="4"/>
+        </StackPanel>
+    </Grid>
+</ContentDialog>

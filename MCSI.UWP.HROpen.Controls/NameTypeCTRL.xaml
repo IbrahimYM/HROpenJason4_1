@@ -1,0 +1,92 @@
+﻿<UserControl
+    x:Class="MCSI.UWP.HROpen.Controls.NameTypeCTRL"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:Interactions="using:Microsoft.Xaml.Interactions.Core"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="700">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <RelativePanel Grid.Row="1" >
+            <StackPanel Orientation="Horizontal" Name="FormattedNameType">
+                <TextBlock Text="Formatted Name" Margin="4" Width="125" VerticalAlignment="Center"/>
+                <TextBox Text="{Binding FormattedNameType, Mode=TwoWay}" Margin="4" Width="200" VerticalAlignment="Center"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Name="Alias" RelativePanel.RightOf="FormattedNameType">
+                <TextBlock Text="Alias" Margin="4" Width="125" VerticalAlignment="Center"/>
+                <TextBox Text="{Binding Alias, Mode=TwoWay}" Margin="4" Width="200" VerticalAlignment="Center"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Name="Given" RelativePanel.Below="FormattedNameType">
+                <TextBlock Text="Given Name" Margin="4" Width="125" VerticalAlignment="Center"/>
+                <TextBox Text="{Binding Given, Mode=TwoWay }" Margin="4" Width="200" VerticalAlignment="Center"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Name="Middle" RelativePanel.Below="Alias" RelativePanel.RightOf="FormattedNameType">
+                <TextBlock Text="Middle Name" Margin="4" Width="125" VerticalAlignment="Center"/>
+                <TextBox Text="{Binding Middle, Mode=TwoWay}" Margin="4" Width="200" VerticalAlignment="Center"/>
+            </StackPanel>
+
+
+            <StackPanel Orientation="Horizontal" Name="Family" RelativePanel.Below="Middle">
+                <TextBlock Text="Family" Margin="4" Width="125" VerticalAlignment="Center"/>
+                <TextBox Text="{Binding Family, Mode=TwoWay}" Margin="4" Width="200" VerticalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Name="FormerFamily" RelativePanel.Below="Middle"  RelativePanel.RightOf="Family">
+                <TextBlock Text="Former Family" Margin="4" Width="125" VerticalAlignment="Center"/>
+                <TextBox Text="{Binding FormerFamily, Mode=TwoWay}" Margin="4" Width="200" VerticalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Name="GenerationalAffixCode" RelativePanel.Below="FormerFamily">
+                <TextBlock Text="Generational Affix Code" Margin="4" Width="160" VerticalAlignment="Center"/>
+                <TextBox Text="{Binding GenerationalAffixCode, Mode=TwoWay}" Margin="4" Width="50" VerticalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Name="Initials" RelativePanel.Below="Family"  RelativePanel.RightOf="GenerationalAffixCode" >
+                <TextBlock Text="Initials" Margin="4" Width="75" VerticalAlignment="Center"/>
+                <TextBox Text="{Binding Initials, Mode=TwoWay}" Margin="4" Width="50" VerticalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Name="TitleAffixCode" RelativePanel.Below="Family"  RelativePanel.RightOf="Initials" >
+                <TextBlock Text="Title Affix Code" Margin="4" Width="100" VerticalAlignment="Center"/>
+                <TextBox Text="{Binding Initials, Mode=TwoWay}" Margin="4" Width="50" VerticalAlignment="Center"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Name="Preferred" RelativePanel.Below="GenerationalAffixCode">
+                <TextBlock Text="Preferred Name" Margin="4" Width="125" VerticalAlignment="Center"/>
+                <TextBox Text="{Binding PreferredName, Mode=TwoWay}" Margin="4" Width="200" VerticalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Name="PreferredSalutationCode" RelativePanel.Below="GenerationalAffixCode"  RelativePanel.RightOf="Initials">
+                <TextBlock Text="Preferred Salutation Code" Margin="4" Width="170" VerticalAlignment="Center"/>
+                <TextBox Text="{Binding PreferredSalutationCode, Mode=TwoWay}" Margin="4" Width="50" VerticalAlignment="Center"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Name="QualificationAffixCode" RelativePanel.Below="Preferred" >
+                <TextBlock Text="Qualification Affix Code" Margin="4" Width="170" VerticalAlignment="Center"/>
+                <TextBox Text="{Binding QualificationAffixCode, Mode=TwoWay}" Margin="4" Width="50" VerticalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Name="LanguageCodeList" RelativePanel.Below="Preferred"  RelativePanel.RightOf="Given">
+                <TextBlock Text="Language Code List" Margin="4" Width="170" VerticalAlignment="Center"/>
+                <!--<TextBox Text="{Binding LanguageCodeList, Mode=TwoWay}" Margin="4" Width="50" VerticalAlignment="Center"/>-->
+                <ComboBox Name="Language" ItemsSource="{Binding LanguageListDict}" SelectedValue="{Binding SelectedLanguage, Mode=TwoWay}" 
+                          SelectedValuePath="Key" DisplayMemberPath="Key"  Width="100"  >
+                    <Interactivity:Interaction.Behaviors>
+                        <Interactions:EventTriggerBehavior EventName="SelectionChanged">
+                            <Interactions:InvokeCommandAction Command="{Binding LanguageChangedCommand}" CommandParameter="{Binding ElementName=Language,Path=SelectedValue}"/>
+                        </Interactions:EventTriggerBehavior>
+                    </Interactivity:Interaction.Behaviors>
+                </ComboBox>
+            </StackPanel>
+
+
+        </RelativePanel>
+
+    </Grid>
+</UserControl>

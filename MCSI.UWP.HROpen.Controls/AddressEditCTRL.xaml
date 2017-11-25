@@ -1,0 +1,115 @@
+﻿<UserControl
+    x:Class="MCSI.UWP.HROpen.Controls.AddressEditCTRL"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MCSI.UWP.HROpen.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:Interactions="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:md="using:MCSI.UWP.HROpen.Controls.Dialogs" 
+    
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="800">
+    <Grid>
+        <RelativePanel Margin="5" >
+
+            <StackPanel Name="AddressName" Orientation="Horizontal" Margin="4">
+                <TextBlock Text="Address Name" Width="125"/>
+                <TextBox Text="{Binding Name,Mode=TwoWay}" Width="200"/>
+            </StackPanel>
+            <StackPanel Name="AddressLine" Orientation="Horizontal" RelativePanel.Below="AddressName" Margin="4">
+                <TextBlock Text="Address Line" Width="125"/>
+                <TextBox Text="{Binding AddressLine,Mode=TwoWay}" Width="200"/>
+            </StackPanel>
+            <StackPanel Name="City" Orientation="Horizontal" RelativePanel.Below="AddressLine" Margin="4">
+                <TextBlock Text="City" Width="125"/>
+                <TextBox Text="{Binding City, Mode=TwoWay}" Width="200"/>
+            </StackPanel>
+
+            <StackPanel Name="Counry" Orientation="Horizontal" RelativePanel.Below="City" Margin="4">
+                <TextBlock Text="Country" Width="125"/>
+                <!--<TextBox Text="{Binding CountryCode}" Width="150"/>-->
+                <ComboBox Name="Country"  ItemsSource="{Binding CountryListDict}" Width="100" DisplayMemberPath="Key" 
+                          SelectedValuePath="Value" SelectedValue="{Binding SelectedCountry,Mode=TwoWay}">
+                    <Interactivity:Interaction.Behaviors>
+                        <Interactions:EventTriggerBehavior EventName="SelectionChanged">
+                            <Interactions:InvokeCommandAction Command="{Binding SelectedCountryChangedCommand}" CommandParameter="{Binding ElementName=Country,Path=SelectedValue}"/>
+                        </Interactions:EventTriggerBehavior>
+                    </Interactivity:Interaction.Behaviors>
+                </ComboBox>
+            </StackPanel>
+
+            <StackPanel Name="PostalCode" Orientation="Horizontal" RelativePanel.Below="Counry"  Margin="4">
+                <TextBlock Text="Postal Code" Width="125"/>
+                <TextBox Text="{Binding PostalCode, Mode=TwoWay}" Width="150"/>
+            </StackPanel>
+
+            <StackPanel Name="PostOffieBox" Orientation="Horizontal" RelativePanel.Below="PostalCode" Margin="4">
+                <TextBlock Text="Post Office Box" Width="125"/>
+                <TextBox Text="{Binding PostOfficeBox, Mode=TwoWay}" Width="150"/>
+            </StackPanel>
+
+            <StackPanel Name="Preference" Orientation="Horizontal" RelativePanel.Below="PostOffieBox"  Margin="4">
+                <TextBlock Text="Preference" Width="125"/>
+                <TextBox Text="{Binding Preference, Mode=TwoWay}" Width="50"/>
+            </StackPanel>
+
+            <StackPanel Name="CountrySubDivisions" Orientation="Vertical" RelativePanel.Below="Preference" Width="325" >
+                <StackPanel Orientation="Horizontal" Width="300">
+                    <TextBlock Text="Country SubDivisions" VerticalAlignment="Center"/>
+                    <AppBarButton Icon="Add" Command="{Binding AppBarCommands}" CommandParameter="Add" Height="54" Width="40" Margin="8,0,0,0" />
+                    <!--<AppBar Width="150">
+                        <AppBarButton  Command="{Binding AppBarCommands}" CommandParameter="Add" Icon="Add" Grid.Row="0">ID</AppBarButton>
+                    </AppBar>-->
+                </StackPanel>
+                <ListView Name="CountrySubDivisionsList" ItemsSource="{Binding CountrySubDivisions,Mode=TwoWay}" 
+                          IsItemClickEnabled="True" IsTapEnabled="True" 
+                          IsDoubleTapEnabled="True" >
+                    <Interactivity:Interaction.Behaviors>
+                        <Interactions:EventTriggerBehavior EventName="SelectionChanged">
+                            <Interactions:InvokeCommandAction Command="{Binding SubDivisionChangedCommand}" 
+                                                              CommandParameter="{Binding ElementName=CountrySubDivisionsList,Path=SelectedValue}"/>
+                        </Interactions:EventTriggerBehavior>
+                    </Interactivity:Interaction.Behaviors>
+                    
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+
+                    <ListView.ItemTemplate >
+                        <DataTemplate >
+                            <Grid Height="35">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="50"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock FontSize="16" Text="{Binding Type}" VerticalAlignment="Center" Grid.Column="0" />
+
+                                <TextBlock FontSize="16" Text="{Binding Value}" VerticalAlignment="Center" Grid.Column="1" />
+
+                                <AppBarButton Grid.Column="2" Command="{Binding DataContext.AppBarCommands,ElementName=CountrySubDivisionsList}"   CommandParameter="Edit" Icon="Edit" Grid.Row="0">ID</AppBarButton>
+                                <AppBarButton Grid.Column="3"  Command="{Binding DataContext.AppBarCommands,ElementName=CountrySubDivisionsList}" CommandParameter="Delete" Icon="Delete"  Grid.Row="0">ID</AppBarButton>
+                                
+
+                            </Grid>
+
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+
+                </ListView>
+            </StackPanel>
+           
+                
+            
+        </RelativePanel>
+        
+
+    </Grid>
+</UserControl>
