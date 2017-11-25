@@ -106,7 +106,6 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="Models\AddressComonentType.cs" />
     <Compile Include="Models\AddressType.cs" />
     <Compile Include="Models\AffiliatedOrganizationTypeCodeList.cs" />
