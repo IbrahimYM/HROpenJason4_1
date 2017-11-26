@@ -29,6 +29,7 @@ namespace MCSI.UWP.HROpen.ViewModels
         }
 
 
+
         private async Task AppBarSelectionAsync( object parmeter)
         {
             switch (parmeter.ToString())
@@ -65,7 +66,6 @@ namespace MCSI.UWP.HROpen.ViewModels
             }
 
         }
-
 
         public UserControl MainContent {
             get { return _mainContent; }
