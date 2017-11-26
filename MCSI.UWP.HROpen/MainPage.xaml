@@ -8,22 +8,27 @@
     xmlns:ctrl="using:MCSI.UWP.HROpen.Controls"
     mc:Ignorable="d">
 
+    <Page.TopAppBar>
+
+        <AppBar ClosedDisplayMode="Minimal">
+            <StackPanel Orientation="Horizontal">
+                <AppBarButton Icon="Home" Command="{Binding AppBarCommands}" CommandParameter="Home" Grid.Row="0"></AppBarButton>
+                <AppBarButton Icon="People" Command="{Binding AppBarCommands}" CommandParameter="People" Grid.Row="0"></AppBarButton>
+                <AppBarButton Icon="Find"  Command="{Binding AppBarCommands}" CommandParameter="Find" Grid.Row="0"></AppBarButton>
+                <AppBarButton Icon="SaveLocal"  Command="{Binding AppBarCommands}" CommandParameter="Save" Grid.Row="0"></AppBarButton>
+            </StackPanel>
+        </AppBar>
+    </Page.TopAppBar>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="5"/>
             <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="35"/>
            
         </Grid.RowDefinitions>
         
-        <StackPanel Orientation="Horizontal">
-            <AppBarButton Icon="Home" Command="{Binding AppBarCommands}" CommandParameter="Home" Grid.Row="0"></AppBarButton>
-            <AppBarButton Icon="People" Command="{Binding AppBarCommands}" CommandParameter="People" Grid.Row="0"></AppBarButton>
-            <AppBarButton Icon="Find"  Command="{Binding AppBarCommands}" CommandParameter="Find" Grid.Row="0"></AppBarButton>
-            <AppBarButton Icon="SaveLocal"  Command="{Binding AppBarCommands}" CommandParameter="Save" Grid.Row="0"></AppBarButton>
-        </StackPanel>
 
         <Border BorderThickness="2" BorderBrush="Black" Grid.Row="1" Margin="4">
             <TextBlock Text="HR OPEN STANDARDS JSON Platform V 4.1" FontSize="18" VerticalAlignment="Center" 
