@@ -20,6 +20,7 @@ namespace MCSI.UWP.HROpen.ViewModels
         private IdentifierTypeCTRL _identifierTypeCTRL;// = new IdentifierTypeCTRL(null);
         private PersonType _personType = Utilities.Repository.CreateNewPerson();
         private PersonCTRL _personCTRL = null;
+        private PersonLocaterCTRL _personLocator = null;
 
         public MainPageViewModel()
         {
@@ -38,6 +39,12 @@ namespace MCSI.UWP.HROpen.ViewModels
                 case "Home":
 
                     MainContent = _HomeCTRL;
+                    break;
+
+                case "OpenFile":
+
+                    if (_personLocator == null) _personLocator = new PersonLocaterCTRL();
+                    MainContent = _personLocator;
                     break;
 
                 case "People":
@@ -60,7 +67,7 @@ namespace MCSI.UWP.HROpen.ViewModels
                     break;
 
                 case "Find":
-                    _personType = await Utilities.Repository.GetPerson();
+                    string test = await Utilities.Repository.GetPerson("");
 
                     break;
             }

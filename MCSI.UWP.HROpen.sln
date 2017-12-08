@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2009
+VisualStudioVersion = 15.0.27130.2003
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCSI.UWP.HROpen", "MCSI.UWP.HROpen\MCSI.UWP.HROpen.csproj", "{83BB74FC-CB84-4377-8652-9870BF831623}"
 EndProject
@@ -22,6 +22,7 @@ Global
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{83BB74FC-CB84-4377-8652-9870BF831623}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{83BB74FC-CB84-4377-8652-9870BF831623}.Debug|Any CPU.Build.0 = Debug|x86
 		{83BB74FC-CB84-4377-8652-9870BF831623}.Debug|Any CPU.Deploy.0 = Debug|x86
 		{83BB74FC-CB84-4377-8652-9870BF831623}.Debug|ARM.ActiveCfg = Debug|ARM
 		{83BB74FC-CB84-4377-8652-9870BF831623}.Debug|ARM.Build.0 = Debug|ARM

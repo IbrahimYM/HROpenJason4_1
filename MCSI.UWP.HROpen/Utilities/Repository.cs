@@ -7,12 +7,15 @@ using MCSI.UWP.HROpen.Common.Models;
 using Windows.Storage;
 using System.Collections.ObjectModel;
 using Newtonsoft.Json;
+using Windows.Storage.Pickers;
 
 namespace MCSI.UWP.HROpen.Utilities
 {
     public static class Repository
     {
-       // private object newFolder;
+        // private object newFolder;
+
+        private static PersonType _currentType;
 
         public static async Task<Boolean> SavePerson(PersonType person)
         {
@@ -25,7 +28,7 @@ namespace MCSI.UWP.HROpen.Utilities
 
                 //for now just store it locally;
                 StorageFolder folder = ApplicationData.Current.LocalFolder;
-                StorageFile textFile = await folder.CreateFileAsync("PersonType.txt",CreationCollisionOption.ReplaceExisting);
+                StorageFile textFile = await folder.CreateFileAsync("PersonType.hrj",CreationCollisionOption.ReplaceExisting);
                 await FileIO.WriteTextAsync(textFile, personData);
                 result = true;
 
@@ -41,16 +44,32 @@ namespace MCSI.UWP.HROpen.Utilities
 
         }
 
-        public static  async Task<PersonType> GetPerson()
+
+        public static  async Task<string> GetPerson(string filePath)
         {
-            PersonType result = null;
+           string result = null;
 
             try
             {
-                StorageFolder folder = ApplicationData.Current.LocalFolder;
-                StorageFile file = await folder.GetFileAsync("PersonType.txt");//   .GetFilesAsync();
-                string json = await FileIO.ReadTextAsync(file);
-                result = JsonConvert.DeserializeObject<PersonType>(json);
+
+                FileOpenPicker openPicker = new FileOpenPicker();
+                openPicker.ViewMode = PickerViewMode.Thumbnail;
+                openPicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
+
+                openPicker.FileTypeFilter.Add("*");
+                openPicker.FileTypeFilter.Add(".hrj");
+
+                StorageFile file = await openPicker.PickSingleFileAsync();
+
+                // StorageFolder folder = ApplicationData.Current.LocalFolder;
+                //  StorageFile file = await folder.GetFileAsync("PersonType.txt");//   .GetFilesAsync();
+
+                if (file != null)
+                {
+                    string json = await FileIO.ReadTextAsync(file);
+                    CurrentPerson = JsonConvert.DeserializeObject<PersonType>(json) ?? null;
+                    result = file.Path;
+                }
 
 
             }
@@ -60,8 +79,7 @@ namespace MCSI.UWP.HROpen.Utilities
                 throw;
             }
 
-
-            return result;
+            return null;
         }
 
         public static PersonType CreateNewPerson()
@@ -93,6 +111,17 @@ namespace MCSI.UWP.HROpen.Utilities
 
             return result;
 
+        }
+
+
+        public static PersonType CurrentPerson
+        {
+            get { return _currentType; }
+
+            set
+            {
+                _currentType = value;
+            }
         }
 
     }

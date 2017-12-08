@@ -29,14 +29,14 @@
             <TextBlock Name="FileLocaterTitle" FontSize="20" Text="Local System File Locater" HorizontalAlignment="Center" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
             <StackPanel Orientation="Horizontal" RelativePanel.Below="FileLocaterTitle" Height="45" Name="FilePath">
             <TextBlock Text="File:" VerticalAlignment="Center" Margin="5"/>
-            <TextBox Text="" Height="25" Width="350"/>
+            <TextBox Text="{Binding FilePath}" Height="25" Width="350"/>
             
         </StackPanel>
         <StackPanel Orientation="Horizontal" RelativePanel.RightOf="FilePath" 
                     RelativePanel.Below="FileLocaterTitle" Name="AppBar" Height="45">
-            <AppBarButton Icon="OpenFile" VerticalAlignment="Center" 
+            <AppBarButton Icon="OpenFile" VerticalAlignment="Center"                        
                           ToolTipService.ToolTip="Open Existing Person File"
-                          Command="{Binding AppBarCommands}" CommandParameter="CreateFile"/>
+                          Command="{Binding AppBarCommands}" CommandParameter="OpenFile"/>
             <AppBarButton Icon="Add" VerticalAlignment="Center" 
                           ToolTipService.ToolTip="Create New Person File"
                           Command="{Binding AppBarCommands}" CommandParameter="SaveAsFile"/>
