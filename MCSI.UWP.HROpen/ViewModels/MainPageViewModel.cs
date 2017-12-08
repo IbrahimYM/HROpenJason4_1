@@ -77,6 +77,10 @@ namespace MCSI.UWP.HROpen.ViewModels
         }
 
         #region Commands
+
+        /// <summary>
+        /// Manages responses to app Bar button selections
+        /// </summary>
         public ICommand AppBarCommands { get; set; }
 
         public class AppBarCommandsClass : ICommand
