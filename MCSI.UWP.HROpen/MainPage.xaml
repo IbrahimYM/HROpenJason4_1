@@ -38,6 +38,10 @@
         
         <!--<ctrl:IdentifierTypeCTRL Grid.Row="2"/>-->
         <ContentControl Content="{Binding MainContent}" Grid.Row="2" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Background="AliceBlue"/>
+        <StackPanel x:Name="StatusBar" Orientation="Horizontal" Grid.Row="3">
+            <TextBlock Text="Current Person: "/>
+            <TextBlock Text="{Binding StatusPersonName}"/>
 
+        </StackPanel>
     </Grid>
 </Page>

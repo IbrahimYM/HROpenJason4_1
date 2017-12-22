@@ -17,7 +17,7 @@
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Grid.Row="0">
             <TextBlock Text="Status:" FontWeight="Bold" VerticalAlignment="Center" Margin="5"/>
-            <TextBlock Text="No Person File Loaded" VerticalAlignment="Center" Margin="5"/>
+            <TextBlock Text="{Binding PersonFileStatus}" VerticalAlignment="Center" Margin="5"/>
             <AppBarButton Icon="SaveLocal"  VerticalAlignment="Center" 
                           ToolTipService.ToolTip="Save Person File Local"/>
             <AppBarButton Icon="Upload"  VerticalAlignment="Center" 

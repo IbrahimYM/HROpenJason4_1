@@ -14,13 +14,46 @@ namespace MCSI.UWP.HROpen.ViewModels
         public PersonLocaterViewModel()
         {
             AppBarCommands = new AppBarCommandsClass(this);
+            PersonFileStatus = Utilities.Repository.CurrentPersonStatus();
 
         }
 
- /// <summary>
- /// Branches logic according to App Bar Button Selections
- /// </summary>
- /// <param name="parameter"></param>
+
+        #region pubic properties
+
+        //where the current person file is stored if
+        //originated from file system.
+        //otherwise entpry string.
+        private string _filePath=string.Empty;
+        public string FilePath
+        {
+            get { return _filePath; }
+
+            set
+            {
+                _filePath = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        //dispalys the currnt status of the PersonFile instance.
+        private string _personFileStatus = string.Empty;
+        public string PersonFileStatus
+        {
+            get { return _personFileStatus; }
+            set
+            {
+                _personFileStatus = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Branches logic according to App Bar Button Selections
+        /// </summary>
+        /// <param name="parameter"></param>
         public async void AppBarSelection(object parameter)
         {
 
@@ -41,18 +74,7 @@ namespace MCSI.UWP.HROpen.ViewModels
             }
         }
 
-        private string _filePath;
-        public string FilePath
-        {
-            get { return _filePath; }
-
-            set
-            {
-                _filePath = value;
-                RaisePropertyChanged();
-            }
-        }
-
+       
         private async void OpenHRJFile()
         {
 

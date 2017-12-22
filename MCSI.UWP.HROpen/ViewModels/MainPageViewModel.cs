@@ -15,21 +15,37 @@ namespace MCSI.UWP.HROpen.ViewModels
     class MainPageViewModel:ViewModelBase
     {
 
-        private UserControl _mainContent = null;
+        //instntiate the HomeCTRL since it is the initial view and is
+        //always used.
         private HomeCTRL _HomeCTRL = new HomeCTRL();
-        private IdentifierTypeCTRL _identifierTypeCTRL;// = new IdentifierTypeCTRL(null);
-        private PersonType _personType = Utilities.Repository.CreateNewPerson();
+
+        //these UI Controls are intantiated upon request.
+        private UserControl _mainContent = null;
+        private IdentifierTypeCTRL _identifierTypeCTRL;// = new IdentifierTypeCTRL(null);  
         private PersonCTRL _personCTRL = null;
         private PersonLocaterCTRL _personLocator = null;
+        private string _statusPersoName = string.Empty;
+
+
+        //There always needs to be an actuve person type. So we instantiate
+        // a deault person type that the user can use to create a new user
+        //when the app first starts up. If the user decides to open an existing
+        //person type then this instance is thrown away or an option to save is
+        //presented ifany changes have been made to this instance.
+        private PersonType _personType = Utilities.Repository.CurrentPerson;
+
+
+        #region behaviors and methods
 
         public MainPageViewModel()
         {
+            //initiate all ICommands, display the default UI and
+            //initiate dictionaries based on Application Enums
+            StatusPersonName = Utilities.Repository.CurrentPerson.Name.FormattedName;
             AppBarCommands = new AppBarCommandsClass(this);
             MainContent = _HomeCTRL;
             MCSI.UWP.HROpen.Controls.Utilities.EnumDictionaries.Init();
         }
-
-
 
         private async Task AppBarSelectionAsync( object parmeter)
         {
@@ -70,10 +86,19 @@ namespace MCSI.UWP.HROpen.ViewModels
                     string test = await Utilities.Repository.GetPerson("");
 
                     break;
+
+                   
             }
+            StatusPersonName= Utilities.Repository.CurrentPerson.Name.FormattedName;
 
         }
 
+        #endregion
+
+        #region public properties
+
+        //binding for content control that represents the selected activety
+        //in the main pane.
         public UserControl MainContent {
             get { return _mainContent; }
             set
@@ -82,6 +107,19 @@ namespace MCSI.UWP.HROpen.ViewModels
                 RaisePropertyChanged();
             }
         }
+
+        //binding for the current person's name displayed in the status bar
+        public string StatusPersonName
+        {
+            get { return _statusPersoName; }
+
+            set
+            {
+                _statusPersoName = value;
+                RaisePropertyChanged();
+            }
+        }
+        #endregion
 
         #region Commands
 
