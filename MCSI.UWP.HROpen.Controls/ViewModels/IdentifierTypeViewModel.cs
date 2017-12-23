@@ -34,7 +34,7 @@ namespace MCSI.UWP.HROpen.Controls.ViewModels
             }
         }
 
-        public string SchemeID
+        public string SchemeId
         {
             get { return _identifierType.SchemeId; }
 

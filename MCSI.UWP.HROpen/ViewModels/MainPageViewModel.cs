@@ -9,6 +9,10 @@ using MCSI.UWP.HROpen.Controls;
 using MCSI.UWP.HROpen.Common.Models;
 using Windows.Storage.Pickers;
 using Windows.Storage;
+using Windows.System.Threading;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Media;
+using Windows.UI;
 
 namespace MCSI.UWP.HROpen.ViewModels
 {
@@ -25,30 +29,50 @@ namespace MCSI.UWP.HROpen.ViewModels
         private PersonCTRL _personCTRL = null;
         private PersonLocaterCTRL _personLocator = null;
         private string _statusPersoName = string.Empty;
+        private SolidColorBrush _statusColor = new SolidColorBrush(Colors.Black);
 
+        private DispatcherTimer timer;
 
-        //There always needs to be an actuve person type. So we instantiate
+        //There always needs to be an active person type. So we instantiate
         // a deault person type that the user can use to create a new user
         //when the app first starts up. If the user decides to open an existing
         //person type then this instance is thrown away or an option to save is
-        //presented ifany changes have been made to this instance.
-        private PersonType _personType = Utilities.Repository.CurrentPerson;
+        //presented if any changes have been made to this instance.
+        private PersonType _personType;// = Utilities.Repository.CreateNewPerson();
 
-
+       
         #region behaviors and methods
 
         public MainPageViewModel()
         {
+
+
             //initiate all ICommands, display the default UI and
             //initiate dictionaries based on Application Enums
-            StatusPersonName = Utilities.Repository.CurrentPerson.Name.FormattedName;
+            Utilities.Repository.CurrentPerson = Utilities.Repository.CreateNewPerson();
+            _personType = Utilities.Repository.CurrentPerson;
+            //StatusPersonName = Utilities.Repository.CurrentPerson.Name.FormattedName;
+
             AppBarCommands = new AppBarCommandsClass(this);
             MainContent = _HomeCTRL;
             MCSI.UWP.HROpen.Controls.Utilities.EnumDictionaries.Init();
+
+            timer = new DispatcherTimer();
+            timer.Tick += Timer_Tick;
+            timer.Interval = new TimeSpan(0, 0,1);
+
+        }
+
+        private void Timer_Tick(object sender, object e)
+        {
+            StatusPersonName = _personType.Name.FormattedName;
+            StatusMessage = string.Empty;
+            StatusColor = null;
         }
 
         private async Task AppBarSelectionAsync( object parmeter)
         {
+            timer.Stop();
             switch (parmeter.ToString())
             {
 
@@ -65,8 +89,10 @@ namespace MCSI.UWP.HROpen.ViewModels
 
                 case "People":
 
-                    _personCTRL = new PersonCTRL(_personType);
-                    // MainContent = new IdentifierTypeCTRL(_personType.Id?? null);
+                    _personCTRL = new PersonCTRL (_personType);
+
+                    timer.Start();
+
                     MainContent = _personCTRL;
                     break;
                 case "Save":
@@ -87,12 +113,14 @@ namespace MCSI.UWP.HROpen.ViewModels
 
                     break;
 
-                   
+                  
             }
-            StatusPersonName= Utilities.Repository.CurrentPerson.Name.FormattedName;
+
+            //_personType = (_personCTRL.DataContext as MCSI.UWP.HROpen.Controls.ViewModels.PersonViewModel).Person;
+          
+
 
         }
-
         #endregion
 
         #region public properties
@@ -111,14 +139,38 @@ namespace MCSI.UWP.HROpen.ViewModels
         //binding for the current person's name displayed in the status bar
         public string StatusPersonName
         {
-            get { return _statusPersoName; }
+            get {
+                // return _statusPersoName;
+                return _personType.Name.FormattedName;
+            }
 
             set
             {
-                _statusPersoName = value;
+               // _statusPersoName = value;
                 RaisePropertyChanged();
             }
         }
+        
+
+        public string StatusMessage
+        {
+            get { return $"({Utilities.Repository.CurrentPersonStatus()})"; }
+
+            set
+            {
+
+                RaisePropertyChanged();
+            }
+        }
+        
+        //black indicates unchanged. red indicates changes pending.
+        public SolidColorBrush StatusColor
+        {
+            get { return Utilities.Repository.IsCurrentPersonDirty() ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Black); }
+
+            set { RaisePropertyChanged(); }
+        }
+
         #endregion
 
         #region Commands
@@ -144,9 +196,11 @@ namespace MCSI.UWP.HROpen.ViewModels
                 return true;
             }
 
-            public void Execute(object parameter)
+            public async void Execute(object parameter)
             {
-                this._parent.AppBarSelectionAsync(parameter);
+               
+               await  this._parent.AppBarSelectionAsync(parameter);
+               
             }
         }
 

@@ -70,6 +70,7 @@ namespace MCSI.UWP.HROpen.Utilities
                 {
                     string json = await FileIO.ReadTextAsync(file);
                     CurrentPerson = JsonConvert.DeserializeObject<PersonType>(json) ?? null;
+                    _personCompare = _currentPerson.ToJson();
                     result = file.Path;
                 }
 
@@ -111,6 +112,7 @@ namespace MCSI.UWP.HROpen.Utilities
             result.Employment = new ObservableCollection<EmployerHistoryType>();
             result.Ethnicity = new ObservableCollection<string>();
 
+            _personCompare = result.ToJson();
             return result;
 
         }
@@ -123,13 +125,13 @@ namespace MCSI.UWP.HROpen.Utilities
             set
             {
                 _currentPerson = value;
-                _personCompare = _currentPerson.ToJson();
+               // _personCompare = _currentPerson.ToJson();
             }
         }
 
         public static Boolean IsCurrentPersonDirty()
         { 
-            return _currentPerson==null?false:_currentPerson.ToJson().Equals(_personCompare);
+            return _currentPerson==null?false:!_currentPerson.ToJson().Equals(_personCompare);
         }
 
         public static string CurrentPersonStatus()

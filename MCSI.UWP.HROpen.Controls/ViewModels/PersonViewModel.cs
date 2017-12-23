@@ -10,11 +10,11 @@ using Windows.UI.Xaml.Controls;
 
 namespace MCSI.UWP.HROpen.Controls.ViewModels
 {
-    class PersonViewModel : ViewModelBase
+    public class PersonViewModel : ViewModelBase
     {
 
 
-        private PersonBaseType _person = null;
+        private PersonType _person = null;
         private IdentifierTypeCTRL _iDCtrl;
 
         private NameTypeCTRL _nameTypeCTRL = null;
@@ -24,16 +24,20 @@ namespace MCSI.UWP.HROpen.Controls.ViewModels
         {
             _person = person;
             _iDCtrl = new IdentifierTypeCTRL(person.Id);
-            
-            
+                       
             IDContent = _iDCtrl;
 
             AppBarCommands = new AppBarCommandsClass(this);
 
             Anonymous Item;
+
+
+
         }
 
-        public void initializePerson(PersonBaseType person)
+
+
+        public void initializePerson(PersonType person)
         {
             _person = person;
         }
@@ -51,12 +55,17 @@ namespace MCSI.UWP.HROpen.Controls.ViewModels
 
         }
 
+        public PersonType Person { get { return _person; } }
+
 
         public string FormattedName
         {
             get { return _person.Name.FormattedName; }
 
-            
+            set
+            {
+                _person.Name.FormattedName = value;
+            }
         }
 
 
@@ -102,6 +111,8 @@ namespace MCSI.UWP.HROpen.Controls.ViewModels
 
                     break;
             }
+
+            
 
         }
 

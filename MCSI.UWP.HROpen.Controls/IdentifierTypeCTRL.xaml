@@ -23,7 +23,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <TextBlock Text="Value" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Margin="2"/>
-        <TextBlock Text="ScemaID" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Margin="2"/>
+        <TextBlock Text="ScemeID" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Margin="2"/>
         <TextBlock Text="SchemeAgencyID" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" Margin="2"/>
         <TextBlock Text="SchemeLink" Grid.Column="0" Grid.Row="3" VerticalAlignment="Center" Margin="2"/>
         <TextBlock Text="SchemeVesionID" Grid.Column="0" Grid.Row="4"  VerticalAlignment="Center" Margin="2"/>
