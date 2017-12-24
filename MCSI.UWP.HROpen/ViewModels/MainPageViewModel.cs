@@ -39,8 +39,7 @@ namespace MCSI.UWP.HROpen.ViewModels
         //person type then this instance is thrown away or an option to save is
         //presented if any changes have been made to this instance.
         private PersonType _personType;// = Utilities.Repository.CreateNewPerson();
-
-       
+     
         #region behaviors and methods
 
         public MainPageViewModel()
@@ -63,6 +62,19 @@ namespace MCSI.UWP.HROpen.ViewModels
 
         }
 
+        //the reason for this dispatch timer is twofold at the moment.
+        //1. To ensure that the UI reflects the most up to date state of the 
+        //application. Not all changes can be event driven directly. So in
+        //the timer tick, I set property values to triger the INotifyPropertyChanged
+        //events.
+        //2. To ensure that all activities in the MainPageViewModel are using the
+        //latest version of the _PersonType object.  I have found that sometimes
+        //during a string of events and metod calls, the _personType object does not
+        //have he current version. But a second time around it does. So something is
+        //blocking the reference update. The Timer Tick acts as a process interupt
+        //allowing the reference update to happen within the UI thread. I do not like
+        //the approach, but it works for now. Anyone reading this that has a suggestion
+        //please speak up!
         private void Timer_Tick(object sender, object e)
         {
             StatusPersonName = _personType.Name.FormattedName;
@@ -109,7 +121,7 @@ namespace MCSI.UWP.HROpen.ViewModels
                     break;
 
                 case "Find":
-                    string test = await Utilities.Repository.GetPerson("");
+                    string test = await Utilities.Repository.GetPersonFromFile("");
 
                     break;
 

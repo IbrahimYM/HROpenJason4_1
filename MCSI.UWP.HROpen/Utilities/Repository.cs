@@ -19,6 +19,7 @@ namespace MCSI.UWP.HROpen.Utilities
         private static PersonType _currentPerson;
         private static string _personCompare = string.Empty;
 
+        #region static public behaviors
         public static async Task<Boolean> SavePerson(PersonType person)
         {
             Boolean result = false;
@@ -46,8 +47,7 @@ namespace MCSI.UWP.HROpen.Utilities
 
         }
 
-
-        public static  async Task<string> GetPerson(string filePath)
+        public static  async Task<string> GetPersonFromFile(string filePath)
         {
            string result = null;
 
@@ -117,17 +117,7 @@ namespace MCSI.UWP.HROpen.Utilities
 
         }
 
-        //the current instance of the PersonType
-        public static PersonType CurrentPerson
-        {
-            get { return _currentPerson?? CreateNewPerson(); }
-
-            set
-            {
-                _currentPerson = value;
-               // _personCompare = _currentPerson.ToJson();
-            }
-        }
+       
 
         public static Boolean IsCurrentPersonDirty()
         { 
@@ -138,6 +128,23 @@ namespace MCSI.UWP.HROpen.Utilities
         {
             return IsCurrentPersonDirty() ? "Current Person has unsaved changes" : "Current Person Unchanged";
         }
+
+        #endregion
+        #region public static properties
+
+        //the current instance of the PersonType
+        public static PersonType CurrentPerson
+        {
+            get { return _currentPerson ?? CreateNewPerson(); }
+
+            set
+            {
+                _currentPerson = value;
+                // _personCompare = _currentPerson.ToJson();
+            }
+        }
+
+        #endregion
 
     }
 }

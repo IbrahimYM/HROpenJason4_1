@@ -31,11 +31,7 @@ namespace MCSI.UWP.HROpen.Controls.ViewModels
 
             Anonymous Item;
 
-
-
         }
-
-
 
         public void initializePerson(PersonType person)
         {
@@ -93,10 +89,11 @@ namespace MCSI.UWP.HROpen.Controls.ViewModels
                     if(_addressesCTRL==null) _addressesCTRL= new AddressesCTRL(_person.Communication.Address);
                     IDContent = _addressesCTRL;                
                     break;
+
                 case "Save":
 
                     //  FileOpenPicker picker = new FileOpenPicker();
-                    ////  picker.SuggestedStartLocation = PickerLocationId.Unspecified;
+                    //  picker.SuggestedStartLocation = PickerLocationId.Unspecified;
                     //  StorageFile x = await picker.PickSingleFileAsync();
 
                     //if (await Utilities.Repository.SavePerson(_personType))

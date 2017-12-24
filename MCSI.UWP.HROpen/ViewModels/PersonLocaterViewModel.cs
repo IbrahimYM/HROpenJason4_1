@@ -93,7 +93,7 @@ namespace MCSI.UWP.HROpen.ViewModels
             //    //  
             //}
 
-           FilePath = await Utilities.Repository.GetPerson("");
+           FilePath = await Utilities.Repository.GetPersonFromFile("");
 
         }
 
