@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using MCSI.UWP.HROpen.Common.Models;
+using MCSI.UWP.HROpen.Controls.Utilities;
 using Windows.UI.Xaml.Controls;
 
 namespace MCSI.UWP.HROpen.Controls.ViewModels
@@ -19,6 +20,10 @@ namespace MCSI.UWP.HROpen.Controls.ViewModels
 
         private NameTypeCTRL _nameTypeCTRL = null;
         private AddressesCTRL _addressesCTRL = null;
+
+        public delegate void SavePersonToFileeHandler(object sender, PersonEventArgs e);
+        public event SavePersonToFileeHandler OnSavePersonToFile;
+
 
         public PersonViewModel(PersonType person)
         {
@@ -100,6 +105,13 @@ namespace MCSI.UWP.HROpen.Controls.ViewModels
                     //{
 
                     //}
+
+                    if(OnSavePersonToFile != null)
+                    {
+                        PersonEventArgs args = new PersonEventArgs() { Person = this.Person };
+                        OnSavePersonToFile(this, args);
+                    }
+
 
                     break;
 

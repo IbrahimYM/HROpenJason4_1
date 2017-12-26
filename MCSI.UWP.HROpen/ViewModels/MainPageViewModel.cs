@@ -77,6 +77,7 @@ namespace MCSI.UWP.HROpen.ViewModels
         //please speak up!
         private void Timer_Tick(object sender, object e)
         {
+            _personType = Utilities.Repository.CurrentPerson;
             StatusPersonName = _personType.Name.FormattedName;
             StatusMessage = string.Empty;
             StatusColor = null;
@@ -85,6 +86,7 @@ namespace MCSI.UWP.HROpen.ViewModels
         private async Task AppBarSelectionAsync( object parmeter)
         {
             timer.Stop();
+           
             switch (parmeter.ToString())
             {
 
@@ -94,14 +96,19 @@ namespace MCSI.UWP.HROpen.ViewModels
                     break;
 
                 case "OpenFile":
-
+                    timer.Start();
                     if (_personLocator == null) _personLocator = new PersonLocaterCTRL();
                     MainContent = _personLocator;
                     break;
 
                 case "People":
+                    if (_personCTRL != null)
+                    {
+                        (_personCTRL.DataContext as MCSI.UWP.HROpen.Controls.ViewModels.PersonViewModel).OnSavePersonToFile -= MainPageViewModel_OnSavePersonToFile;
+                    }
 
                     _personCTRL = new PersonCTRL (_personType);
+                    (_personCTRL.DataContext as MCSI.UWP.HROpen.Controls.ViewModels.PersonViewModel).OnSavePersonToFile += MainPageViewModel_OnSavePersonToFile;
 
                     timer.Start();
 
@@ -113,7 +120,7 @@ namespace MCSI.UWP.HROpen.ViewModels
                   ////  picker.SuggestedStartLocation = PickerLocationId.Unspecified;
                   //  StorageFile x = await picker.PickSingleFileAsync();
 
-                  if( await Utilities.Repository.SavePerson(_personType))
+                  if( await Utilities.Repository.SavePersonToFile(_personType))
                     {
 
                     }
@@ -132,6 +139,15 @@ namespace MCSI.UWP.HROpen.ViewModels
           
 
 
+        }
+
+        private void MainPageViewModel_OnSavePersonToFile(object sender, Controls.Utilities.PersonEventArgs e)
+        {
+           // timer.Stop();
+
+            Utilities.Repository.SavePersonToFile(e.Person);
+
+           // timer.Start();
         }
         #endregion
 

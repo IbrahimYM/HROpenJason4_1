@@ -20,7 +20,7 @@ namespace MCSI.UWP.HROpen.Utilities
         private static string _personCompare = string.Empty;
 
         #region static public behaviors
-        public static async Task<Boolean> SavePerson(PersonType person)
+        public static async Task<Boolean> SavePersonToFile(PersonType person)
         {
             Boolean result = false;
             string personData = string.Empty;
@@ -29,11 +29,24 @@ namespace MCSI.UWP.HROpen.Utilities
             {
                 personData = person.ToJson();
 
-                //for now just store it locally;
-                StorageFolder folder = ApplicationData.Current.LocalFolder;
-                StorageFile textFile = await folder.CreateFileAsync("PersonType.hrj",CreationCollisionOption.ReplaceExisting);
-                await FileIO.WriteTextAsync(textFile, personData);
-                result = true;
+                FileSavePicker savePicker = new FileSavePicker();
+                savePicker.FileTypeChoices.Add("HROpen Person", new List<string>() { ".hrj" });
+                savePicker.FileTypeChoices.Add("JSON File", new List<string>() { ".json" });
+                savePicker.FileTypeChoices.Add("Text File", new List<string>() { ".txt" });
+                savePicker.DefaultFileExtension = ".hrj";
+                savePicker.SuggestedFileName = person.Name.FormattedName;
+                StorageFile itemToSave = await savePicker.PickSaveFileAsync();
+
+
+                if (itemToSave != null)
+                {
+
+                    await Windows.Storage.FileIO.WriteTextAsync(itemToSave, personData);
+                    _personCompare = CurrentPerson.ToJson();
+                    result = true;
+                }
+
+               
 
             }
             catch (Exception ex)
@@ -49,7 +62,7 @@ namespace MCSI.UWP.HROpen.Utilities
 
         public static  async Task<string> GetPersonFromFile(string filePath)
         {
-           string result = null;
+           string result = string.Empty;
 
             try
             {
@@ -70,7 +83,7 @@ namespace MCSI.UWP.HROpen.Utilities
                 {
                     string json = await FileIO.ReadTextAsync(file);
                     CurrentPerson = JsonConvert.DeserializeObject<PersonType>(json) ?? null;
-                    _personCompare = _currentPerson.ToJson();
+                    _personCompare = CurrentPerson.ToJson();
                     result = file.Path;
                 }
 
@@ -82,7 +95,7 @@ namespace MCSI.UWP.HROpen.Utilities
                 throw;
             }
 
-            return null;
+            return result;
         }
 
         public static PersonType CreateNewPerson()

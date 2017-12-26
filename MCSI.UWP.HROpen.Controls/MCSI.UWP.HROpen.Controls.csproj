@@ -123,6 +123,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\EnumDictionaries.cs" />
+    <Compile Include="Utilities\PersonEventArgs.cs" />
     <Compile Include="ViewModels\AddressEditViewModel.cs" />
     <Compile Include="ViewModels\AddrssesCTRLViewModel.cs" />
     <Compile Include="ViewModels\CountrySubDivisionEditViewModel.cs" />
