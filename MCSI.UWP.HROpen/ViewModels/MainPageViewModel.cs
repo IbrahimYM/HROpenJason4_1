@@ -19,6 +19,8 @@ namespace MCSI.UWP.HROpen.ViewModels
     class MainPageViewModel:ViewModelBase
     {
 
+        #region private variables
+
         //instntiate the HomeCTRL since it is the initial view and is
         //always used.
         private HomeCTRL _HomeCTRL = new HomeCTRL();
@@ -39,7 +41,9 @@ namespace MCSI.UWP.HROpen.ViewModels
         //person type then this instance is thrown away or an option to save is
         //presented if any changes have been made to this instance.
         private PersonType _personType;// = Utilities.Repository.CreateNewPerson();
-     
+
+        #endregion
+
         #region behaviors and methods
 
         public MainPageViewModel()
@@ -107,7 +111,7 @@ namespace MCSI.UWP.HROpen.ViewModels
                         (_personCTRL.DataContext as MCSI.UWP.HROpen.Controls.ViewModels.PersonViewModel).OnSavePersonToFile -= MainPageViewModel_OnSavePersonToFile;
                     }
 
-                    _personCTRL = new PersonCTRL (_personType);
+                    _personCTRL = new PersonCTRL (Utilities.Repository.CurrentPerson);
                     (_personCTRL.DataContext as MCSI.UWP.HROpen.Controls.ViewModels.PersonViewModel).OnSavePersonToFile += MainPageViewModel_OnSavePersonToFile;
 
                     timer.Start();
@@ -116,18 +120,17 @@ namespace MCSI.UWP.HROpen.ViewModels
                     break;
                 case "Save":
 
-                  //  FileOpenPicker picker = new FileOpenPicker();
-                  ////  picker.SuggestedStartLocation = PickerLocationId.Unspecified;
-                  //  StorageFile x = await picker.PickSingleFileAsync();
+                 
 
                   if( await Utilities.Repository.SavePersonToFile(_personType))
                     {
-
+                        //if nothing to do here then clean up code.
                     }
 
                     break;
 
                 case "Find":
+
                     string test = await Utilities.Repository.GetPersonFromFile("");
 
                     break;
@@ -141,14 +144,15 @@ namespace MCSI.UWP.HROpen.ViewModels
 
         }
 
-        private void MainPageViewModel_OnSavePersonToFile(object sender, Controls.Utilities.PersonEventArgs e)
-        {
-           // timer.Stop();
 
-            Utilities.Repository.SavePersonToFile(e.Person);
+        #region Control Events
 
-           // timer.Start();
+        //reference to Person Control's call to save the persontype referenced in the event's argument.
+        private async void MainPageViewModel_OnSavePersonToFile(object sender, Controls.Utilities.PersonEventArgs e)
+        {         
+           await Utilities.Repository.SavePersonToFile(e.Person);          
         }
+        #endregion
         #endregion
 
         #region public properties

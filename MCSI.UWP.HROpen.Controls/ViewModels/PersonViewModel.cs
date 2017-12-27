@@ -28,6 +28,7 @@ namespace MCSI.UWP.HROpen.Controls.ViewModels
         public PersonViewModel(PersonType person)
         {
             _person = person;
+           
             _iDCtrl = new IdentifierTypeCTRL(person.Id);
                        
             IDContent = _iDCtrl;
@@ -66,6 +67,7 @@ namespace MCSI.UWP.HROpen.Controls.ViewModels
             set
             {
                 _person.Name.FormattedName = value;
+                RaisePropertyChanged();
             }
         }
 

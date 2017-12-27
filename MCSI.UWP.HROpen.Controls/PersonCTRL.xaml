@@ -9,26 +9,85 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <Grid>
+    <Grid x:Name="LayoutRoot" Background="AliceBlue">
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="30"/>
+            <RowDefinition x:Name="ApBarRow" Height="Auto" />
+            <RowDefinition  Height="30"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="Narrow">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="Panel2.(RelativePanel.Below)" Value="Panel1"/>
+                        <Setter Target="Panel3.(RelativePanel.Below)" Value="Panel2"/>
+                        <Setter Target="Panel3.(RelativePanel.AlignLeftWithPanel)" Value="True"/>
+                        <!--<Setter Target="LayoutRoot.(AppBarRow.Height)" Value="120"/>-->
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Middle">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="550" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="Panel2.(RelativePanel.RightOf)" Value="Panel1"/>
+                        <Setter Target="Panel2.(RelativePanel.AlignTopWithPanel)" Value="True"/>
+                        <!--<Setter Target="Panel3.(RelativePanel.RightOf)" Value="Panel2"/>-->
+                        <Setter Target="Panel3.(RelativePanel.AlignLeftWithPanel)" Value="True"/>
+                        <!--<Setter Target="LayoutRoot.(AppBarRow.Height)" Value="40"/>-->
+                        <Setter Target="Panel3.(RelativePanel.Below)" Value="Panel1"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="Wide">
+                <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="650" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        
+                        <Setter Target="Panel2.(RelativePanel.RightOf)" Value="Panel1"/>
+                        <Setter Target="Panel2.(RelativePanel.AlignTopWithPanel)" Value="True"/>
+                        <Setter Target="Panel3.(RelativePanel.RightOf)" Value="Panel2"/>
+                        <Setter Target="Panel3.(RelativePanel.AlignTopWithPanel)" Value="True"/>
+                        <!--<Setter Target="LayoutRoot.(AppBarRow.Height)" Value="40"/>-->
+                    </VisualState.Setters>
+                </VisualState>
+               
+            </VisualStateGroup>
+           
+        </VisualStateManager.VisualStateGroups>
+        
         <TextBlock Text="{Binding FormattedName}" FontSize="18" FontWeight="Bold" Grid.Row="1" HorizontalAlignment="Center"/>
+        
+
+        <RelativePanel MinWidth="500" Grid.Row="0">
+            <StackPanel x:Name="Panel1" Orientation="Horizontal" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignLeftWithPanel="True" >
+                <AppBarButton  Command="{Binding AppBarCommands}" CommandParameter="ID" Grid.Row="0">ID</AppBarButton>
+                <AppBarButton  Command="{Binding AppBarCommands}" CommandParameter="Name" Grid.Row="0">Name</AppBarButton>
+                <AppBarButton  Command="{Binding AppBarCommands}" CommandParameter="Addresses" Grid.Row="0">Addresses</AppBarButton>
+                <AppBarButton  Command="{Binding AppBarCommands}" CommandParameter="Other 2" Grid.Row="0">Other 2</AppBarButton>
+            </StackPanel>
+            <StackPanel x:Name="Panel2" Orientation="Horizontal" >
+                <AppBarButton  Command="{Binding AppBarCommands}" CommandParameter="Other 3" Grid.Row="0">Other 3</AppBarButton>
+                <AppBarButton  Command="{Binding AppBarCommands}" CommandParameter="Other 4" Grid.Row="0">Other 1</AppBarButton>
+                <AppBarButton  Command="{Binding AppBarCommands}" CommandParameter="Other 5" Grid.Row="0">Other 2</AppBarButton>
+                <AppBarButton  Command="{Binding AppBarCommands}" CommandParameter="Other 6" Grid.Row="0">Other 3</AppBarButton>
+            </StackPanel>
+            <StackPanel x:Name="Panel3" Orientation="Horizontal" RelativePanel.RightOf="Panel2" >
+                <AppBarButton Icon="Find"  Command="{Binding AppBarCommands}" CommandParameter="Find" Grid.Row="0"></AppBarButton>
+                <AppBarButton Icon="SaveLocal"  Command="{Binding AppBarCommands}" CommandParameter="Save" Grid.Row="0"></AppBarButton>
+            </StackPanel>
+        </RelativePanel>
         <StackPanel Orientation="Horizontal" >
-            <AppBarButton  Command="{Binding AppBarCommands}" CommandParameter="ID" Grid.Row="0">ID</AppBarButton>
-            <AppBarButton  Command="{Binding AppBarCommands}" CommandParameter="Name" Grid.Row="0">Name</AppBarButton>
-            <AppBarButton  Command="{Binding AppBarCommands}" CommandParameter="Addresses" Grid.Row="0">Addresses</AppBarButton>
-            <AppBarButton  Command="{Binding AppBarCommands}" CommandParameter="Other 2" Grid.Row="0">Other 2</AppBarButton>
-            <AppBarButton  Command="{Binding AppBarCommands}" CommandParameter="Other 3" Grid.Row="0">Other 3</AppBarButton>
-            <AppBarButton  Command="{Binding AppBarCommands}" CommandParameter="Other 4" Grid.Row="0">Other 1</AppBarButton>
-            <AppBarButton  Command="{Binding AppBarCommands}" CommandParameter="Other 5" Grid.Row="0">Other 2</AppBarButton>
-            <AppBarButton  Command="{Binding AppBarCommands}" CommandParameter="Other 6" Grid.Row="0">Other 3</AppBarButton>
-            <AppBarButton Icon="Find"  Command="{Binding AppBarCommands}" CommandParameter="Find" Grid.Row="0"></AppBarButton>
-            <AppBarButton Icon="SaveLocal"  Command="{Binding AppBarCommands}" CommandParameter="Save" Grid.Row="0"></AppBarButton>
+            
+           
+           
 
         </StackPanel>
 

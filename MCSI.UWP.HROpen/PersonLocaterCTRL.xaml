@@ -16,10 +16,9 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Grid.Row="0">
-            <TextBlock Text="Status:" FontWeight="Bold" VerticalAlignment="Center" Margin="5"/>
-            <TextBlock Text="{Binding PersonFileStatus}" VerticalAlignment="Center" Margin="5"/>
-            <AppBarButton Icon="SaveLocal"  VerticalAlignment="Center" 
-                          ToolTipService.ToolTip="Save Person File Local"/>
+
+           
+          
             <AppBarButton Icon="Upload"  VerticalAlignment="Center" 
                           ToolTipService.ToolTip="Update Person File to Rest Service"/>
 
@@ -39,9 +38,12 @@
                           Command="{Binding AppBarCommands}" CommandParameter="OpenFile"/>
             <AppBarButton Icon="Add" VerticalAlignment="Center" 
                           ToolTipService.ToolTip="Create New Person File"
-                          Command="{Binding AppBarCommands}" CommandParameter="SaveAsFile"/>
-          
-        </StackPanel>
+                          Command="{Binding AppBarCommands}" CommandParameter="CreateNewFile"/>
+            <AppBarButton Icon="SaveLocal"  VerticalAlignment="Center" 
+                        ToolTipService.ToolTip="Save Person File Local"
+                        Command="{Binding AppBarCommands}" CommandParameter="SaveAsFile"/>
+
+            </StackPanel>
         </RelativePanel>
         <RelativePanel Grid.Row="2">
             <TextBlock Name="RestLocaterTitle" FontSize="20" Text="Rest API File Locater" HorizontalAlignment="Center" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
