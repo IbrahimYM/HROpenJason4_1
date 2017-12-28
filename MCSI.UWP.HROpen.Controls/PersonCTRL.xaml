@@ -28,7 +28,7 @@
                         <Setter Target="Panel2.(RelativePanel.Below)" Value="Panel1"/>
                         <Setter Target="Panel3.(RelativePanel.Below)" Value="Panel2"/>
                         <Setter Target="Panel3.(RelativePanel.AlignLeftWithPanel)" Value="True"/>
-                        <!--<Setter Target="LayoutRoot.(AppBarRow.Height)" Value="120"/>-->
+                       
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Middle">
@@ -38,9 +38,7 @@
                     <VisualState.Setters>
                         <Setter Target="Panel2.(RelativePanel.RightOf)" Value="Panel1"/>
                         <Setter Target="Panel2.(RelativePanel.AlignTopWithPanel)" Value="True"/>
-                        <!--<Setter Target="Panel3.(RelativePanel.RightOf)" Value="Panel2"/>-->
                         <Setter Target="Panel3.(RelativePanel.AlignLeftWithPanel)" Value="True"/>
-                        <!--<Setter Target="LayoutRoot.(AppBarRow.Height)" Value="40"/>-->
                         <Setter Target="Panel3.(RelativePanel.Below)" Value="Panel1"/>
                     </VisualState.Setters>
                 </VisualState>

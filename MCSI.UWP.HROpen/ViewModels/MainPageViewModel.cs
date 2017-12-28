@@ -13,6 +13,7 @@ using Windows.System.Threading;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 using Windows.UI;
+using System.Reflection;
 
 namespace MCSI.UWP.HROpen.ViewModels
 {
@@ -60,9 +61,24 @@ namespace MCSI.UWP.HROpen.ViewModels
             MainContent = _HomeCTRL;
             MCSI.UWP.HROpen.Controls.Utilities.EnumDictionaries.Init();
 
+            CreatePeopleControlInstance();
+
             timer = new DispatcherTimer();
             timer.Tick += Timer_Tick;
             timer.Interval = new TimeSpan(0, 0,1);
+
+        }
+
+        private void CreatePeopleControlInstance()
+        {
+
+            if (_personCTRL != null)
+            {
+                (_personCTRL.DataContext as MCSI.UWP.HROpen.Controls.ViewModels.PersonViewModel).OnSavePersonToFile -= MainPageViewModel_OnSavePersonToFile;
+            }
+
+            _personCTRL = new PersonCTRL(Utilities.Repository.CurrentPerson);
+            (_personCTRL.DataContext as MCSI.UWP.HROpen.Controls.ViewModels.PersonViewModel).OnSavePersonToFile += MainPageViewModel_OnSavePersonToFile;
 
         }
 
@@ -81,10 +97,24 @@ namespace MCSI.UWP.HROpen.ViewModels
         //please speak up!
         private void Timer_Tick(object sender, object e)
         {
+
             _personType = Utilities.Repository.CurrentPerson;
             StatusPersonName = _personType.Name.FormattedName;
             StatusMessage = string.Empty;
             StatusColor = null;
+
+            //tests for 
+            Type t = MainContent.DataContext.GetType();
+            Type u = typeof(ViewModels.ViewModelBase);
+            if (!u.IsAssignableFrom(t))
+            {
+                (MainContent.DataContext as MCSI.UWP.HROpen.Controls.ViewModels.ViewModelBase).Pulse();
+            }
+            else
+            {
+                (MainContent.DataContext as ViewModelBase).Pulse();
+            }
+           
         }
 
         private async Task AppBarSelectionAsync( object parmeter)
@@ -106,21 +136,15 @@ namespace MCSI.UWP.HROpen.ViewModels
                     break;
 
                 case "People":
-                    if (_personCTRL != null)
-                    {
-                        (_personCTRL.DataContext as MCSI.UWP.HROpen.Controls.ViewModels.PersonViewModel).OnSavePersonToFile -= MainPageViewModel_OnSavePersonToFile;
-                    }
-
-                    _personCTRL = new PersonCTRL (Utilities.Repository.CurrentPerson);
-                    (_personCTRL.DataContext as MCSI.UWP.HROpen.Controls.ViewModels.PersonViewModel).OnSavePersonToFile += MainPageViewModel_OnSavePersonToFile;
+                    
+                    _personCTRL.Initialize(Utilities.Repository.CurrentPerson);
 
                     timer.Start();
 
                     MainContent = _personCTRL;
-                    break;
-                case "Save":
 
-                 
+                    break;
+                case "Save":                 
 
                   if( await Utilities.Repository.SavePersonToFile(_personType))
                     {
@@ -138,12 +162,7 @@ namespace MCSI.UWP.HROpen.ViewModels
                   
             }
 
-            //_personType = (_personCTRL.DataContext as MCSI.UWP.HROpen.Controls.ViewModels.PersonViewModel).Person;
-          
-
-
         }
-
 
         #region Control Events
 

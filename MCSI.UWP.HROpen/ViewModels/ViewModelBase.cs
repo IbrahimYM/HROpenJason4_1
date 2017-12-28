@@ -22,5 +22,9 @@ namespace MCSI.UWP.HROpen.ViewModels
         }
 
         #endregion
+
+        //allows system to initiate the refeshing of ViewModel data.
+        public virtual void Pulse() { }
+
     }
 }

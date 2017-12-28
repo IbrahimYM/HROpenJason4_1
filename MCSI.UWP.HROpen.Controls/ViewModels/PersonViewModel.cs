@@ -37,14 +37,10 @@ namespace MCSI.UWP.HROpen.Controls.ViewModels
 
             Anonymous Item;
 
-        }
-
-        public void initializePerson(PersonType person)
-        {
-            _person = person;
-        }
+        }      
 
         private UserControl _iDContent;
+
         public UserControl IDContent
         {
             get { return _iDContent; }
@@ -57,8 +53,24 @@ namespace MCSI.UWP.HROpen.Controls.ViewModels
 
         }
 
-        public PersonType Person { get { return _person; } }
+        public override void Pulse()
+        {
 
+            FormattedName = _person.Name.FormattedName;
+            base.Pulse();
+        }
+
+        public override void Initiate(object item)
+        {
+            if(item.GetType() == typeof(PersonType))
+            {
+                _person = (item as PersonType);
+            }
+
+            base.Initiate(item);
+        }
+
+        public PersonType Person { get { return _person; } }
 
         public string FormattedName
         {
@@ -70,7 +82,6 @@ namespace MCSI.UWP.HROpen.Controls.ViewModels
                 RaisePropertyChanged();
             }
         }
-
 
         private async Task AppBarSelectionAsync(object parmeter)
         {

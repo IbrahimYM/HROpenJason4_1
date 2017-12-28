@@ -18,5 +18,14 @@ namespace MCSI.UWP.HROpen.Controls.ViewModels
             if (handler != null)
                 handler(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
         }
+
+        //provides a way for external parent to indicate the need for
+        //refreshing the internal state of the ViewModel.
+        public virtual void Pulse() { }
+
+        public virtual void Initiate(object item) { }
+        
     }
+
+
 }
